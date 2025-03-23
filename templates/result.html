@@ -6,115 +6,118 @@
     <title>Classification Result</title>
     <style>
         body {
-            font-family: 'Arial', sans-serif;
-            background-color: #f0f2f5;
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(#FBEAEB);
             margin: 0;
             padding: 0;
-            margin-top:10px;
-            margin-bottom:20px;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
             height: 100vh;
-            text-align: center;
-        }
-        h1 {
-            color: #333;
-            margin-bottom: 20px;
-            font-size: 2.5em;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
-        }
-        .result-container {
-            background-color: white;
-            padding: 30px;
-            border-radius: 15px;
-            box-shadow: 0 15px 25px rgba(0, 0, 0, 0.1);
-            max-width: 450px;
-            width: 100%;
-            animation: fadeIn 0.5s ease-in-out;
-        }
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: translateY(-20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-        img {
-            border: 2px solid #ddd;
-            border-radius: 10px;
-            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
-            max-width: 70%;
-            height: auto;
-            transition: transform 0.3s ease;
-        }
-        img:hover {
-            transform: scale(1.05);
-        }
-        .prediction-result {
-            background-color: #007bff;
             color: white;
-            padding: 15px;
-            border-radius: 10px;
-            margin-top: 20px;
-            font-size: 1.3em;
-            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-            transition: box-shadow 0.3s ease;
+            animation: fadeIn 0.8s ease-in-out;
         }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .result-container {
+            background: #2F3C7E;
+            backdrop-filter: blur(12px);
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            text-align: center;
+            max-width: 600px;
+            width: 90%;
+            animation: slideIn 0.8s ease-in-out;
+        }
+
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateY(-30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        h1 {
+            font-size: 3em;
+            margin-bottom: 30px;
+            background: linear-gradient(90deg, #ff8a00, #e52e71);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        img {
+            border-radius: 15px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+            max-width: 80%;
+            height: auto;
+            transition: transform 0.5s ease;
+        }
+
+        img:hover {
+            transform: scale(1.1);
+        }
+
+        .prediction-result {
+            margin-top: 30px;
+            padding: 20px;
+            border-radius: 15px;
+            background: linear-gradient(135deg, #4e54c8, #8f94fb);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+            transition: transform 0.4s;
+        }
+
         .prediction-result:hover {
-            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.3);
+            transform: translateY(-5px);
         }
-        h2, h3 {
+
+        .label, .confidence {
+            font-size: 1.5em;
             margin: 10px 0;
         }
-        h2 {
-            font-size: 1.8em;
+
+        .highlight {
+            padding: 10px 20px;
+            border-radius: 8px;
+            background: #ff6f61;
+            color: white;
             font-weight: bold;
-            color: #333;
-            margin-bottom: 5px;
+            display: inline-block;
         }
-        h3 {
-            font-size: 1.5em;
-            color: #333;
-        }
+
         a {
             text-decoration: none;
-            color: #007bff;
-            font-weight: bold;
-            margin-top: 20px;
+            margin-top: 30px;
             display: inline-block;
-            padding: 10px 20px;
-            border-radius: 5px;
-            background-color: #f0f0f0;
-            box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
-            transition: background-color 0.3s, box-shadow 0.3s;
-        }
-        a:hover {
-            background-color: #007bff;
+            padding: 12px 24px;
+            font-size: 1.2em;
+            border-radius: 8px;
+            background: linear-gradient(90deg, #00c9ff, #92fe9d);
             color: white;
-            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s, box-shadow 0.3s;
         }
+
+        a:hover {
+            transform: scale(1.1);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+        }
+
     </style>
 </head>
 <body>
     <div class="result-container">
-        <h1>Results</h1>
+        <h1>Diagnosis Result</h1>
         <img src="{{ url_for('uploaded_file', filename=filename) }}" alt="Uploaded Image">
-        <div class="prediction-result">
-            <h2>Predicted Status:</h2>
-            <p style="background:yellow; width:35%; margin-left:30%; color:black;">{{ predicted_label }}</p>
-            <h3>Confidence Score:</h3>
-            <p style="background:yellow; width:35%; margin-left:30%; color:black;"> {{ '%.2f' % (confidence_score * 100) }}%</p>
 
+        <div class="prediction-result">
+            <p class="label">Predicted Status: <span class="highlight">{{ predicted_label }}</span></p>
+            <p class="confidence">Confidence Score: <span class="highlight">{{ '%.2f' % (confidence_score * 100) }}%</span></p>
         </div>
-        <br>
-        <a href="{{ url_for('home') }}">Back to Home</a>
+
+        <a href="{{ url_for('home') }}">⬅ Back to Home</a>
     </div>
 </body>
 </html>
