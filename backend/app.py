@@ -8,19 +8,24 @@ from werkzeug.utils import secure_filename
 import requests
 from flask_cors import CORS
 from supabase import create_client, Client
+from dotenv import load_dotenv
+import os
 
 # Initialize Flask app
 app = Flask(__name__)
 CORS(app)  # Enable CORS
+
+load_dotenv()  # Load environment variables from .env file
 
 # Load pre-trained model and label encoder
 model = load_model('models/CNN_Xray_Version.h5')
 le = pickle.load(open("models/Label_encoder.pkl", 'rb'))
 
 # Supabase credentials (⚠️ don't expose these on frontend in production)
-SUPABASE_URL = "https://tidwaaoskdefawmgvvpl.supabase.co"
-SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InRpZHdhYW9za2RlZmF3bWd2dnBsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDQxMzc1NTUsImV4cCI6MjA1OTcxMzU1NX0.UxY80Tsh_GitbQovdX1d12OvBSE-5KCjs07n7ulNFA8"
-
+SUPABASE_URL = os.getenv("VITE_SUPABASE_URL")
+SUPABASE_KEY = os.getenv("VITE_SUPABASE_ANON_KEY")
+print(f"Supabase URL: {SUPABASE_URL}")
+print(f"Supabase Key: {SUPABASE_KEY}")
 supabase: Client = create_client(SUPABASE_URL, SUPABASE_KEY)
 
 # File upload settings
