@@ -8,6 +8,8 @@ interface Analysis {
   created_at: string;
   image_path: string;
   status: string;
+  predicted_label: string;
+  confidence_score: number;
   result: {
     probability: number;
     timestamp: string;
@@ -49,13 +51,20 @@ export default function History() {
     doc.text(`Date: ${new Date(analysis.created_at).toLocaleDateString()}`, 20, 40);
     doc.text(`Analysis ID: ${analysis.id}`, 20, 50);
     doc.text(
-      `Detection Probability: ${
-        analysis.result ? (analysis.result.probability * 100).toFixed(2) + '%' : 'Pending'
+      `Detection Result: ${
+        analysis ? analysis.predicted_label : 'Pending'
       }`,
       20,
       60
     );
-    doc.text(`Status: ${analysis.status}`, 20, 70);
+    doc.text(
+      `Detection Probability: ${
+        analysis ? (analysis.confidence_score * 100).toFixed(2) + '%' : 'Pending'
+      }`,
+      20,
+      70
+    );
+    doc.text(`Status: ${analysis.status}`, 20, 80);
 
     doc.save(`pneumonia-analysis-${analysis.id}.pdf`);
   };
@@ -121,6 +130,9 @@ export default function History() {
                       <th className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
                         Result
                       </th>
+                      <th className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
+                        Probability
+                      </th>
                       <th className="relative py-3.5 pl-3 pr-4 sm:pr-6">
                         <span className="sr-only">Actions</span>
                       </th>
@@ -144,9 +156,18 @@ export default function History() {
                           </span>
                         </td>
                         <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                          {analysis.status === 'completed' && analysis.result ? (
+                          {analysis.status === 'success' && analysis ? (
                             <span>
-                              {(analysis.result.probability * 100).toFixed(2)}% probability
+                              {analysis.predicted_label}
+                            </span>
+                          ) : (
+                            <span className="text-gray-400 italic">Pending</span>
+                          )}
+                        </td>
+                        <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                          {analysis.status === 'success' && analysis ? (
+                            <span>
+                              {(analysis.confidence_score * 100).toFixed(2) + '%'}
                             </span>
                           ) : (
                             <span className="text-gray-400 italic">Pending</span>
