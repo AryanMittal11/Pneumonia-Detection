@@ -62,14 +62,14 @@ function Contact() {
               <Mail className="w-5 h-5 text-blue-600 mt-1" />
               <div>
                 <h3 className="font-medium text-gray-900">Email</h3>
-                <p className="text-gray-600">contact@example.com</p>
+                <p className="text-gray-600">mittalaryan984@gmail.com</p>
               </div>
             </div>
             <div className="flex items-start space-x-3">
               <Phone className="w-5 h-5 text-blue-600 mt-1" />
               <div>
                 <h3 className="font-medium text-gray-900">Phone</h3>
-                <p className="text-gray-600">+1 (555) 123-4567</p>
+                <p className="text-gray-600">+91 93502*****</p>
               </div>
             </div>
             <div className="flex items-start space-x-3">
@@ -77,9 +77,9 @@ function Contact() {
               <div>
                 <h3 className="font-medium text-gray-900">Address</h3>
                 <p className="text-gray-600">
-                  123 Business Street<br />
-                  Suite 100<br />
-                  City, State 12345
+                  VIT Bhopal University<br />
+                  Sehore<br />
+                  Madhya Pradesh<br />
                 </p>
               </div>
             </div>

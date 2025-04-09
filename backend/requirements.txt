@@ -1,0 +1,9 @@
+Flask
+Flask-Cors
+tensorflow
+numpy
+opencv-python
+requests
+python-dotenv
+supabase
+werkzeug
