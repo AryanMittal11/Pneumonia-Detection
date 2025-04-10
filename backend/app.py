@@ -47,9 +47,7 @@ def process_image(image_path):
     predicted_label = le.inverse_transform([predicted_index])[0]
     return predicted_label, confidence_score
 
-@app.route('/')
-def home():
-    return render_template('index.html')
+
 
 @app.route('/upload', methods=['POST'])
 def upload_file():
@@ -89,45 +87,15 @@ def upload_file():
         except Exception as e:
             return {"error": f"Exception while inserting to Supabase: {str(e)}"}, 500
 
+        
+
         return {
             "predicted_label": predicted_label,
             "confidence_score": round(float(confidence_score), 4)
         }
 
-@app.route('/predict', methods=['POST'])
-def predict_from_url():
-    try:
-        data = request.get_json()
-        image_url = data.get('image_url')
-        if not image_url:
-            return {"error": "Image URL is required"}, 400
 
-        response = requests.get(image_url)
-        if response.status_code != 200:
-            return {"error": "Unable to download image"}, 400
 
-        image_array = np.frombuffer(response.content, np.uint8)
-        image = cv2.imdecode(image_array, cv2.IMREAD_COLOR)
-        if image is None:
-            return {"error": "Invalid image data"}, 400
-
-        image_rgb = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
-        image_resized = cv2.resize(image_rgb, (150, 150))
-        image_normalized = image_resized / 255.0
-        image_input = np.expand_dims(image_normalized, axis=0)
-
-        predictions = model.predict(image_input)
-        predicted_index = np.argmax(predictions)
-        confidence_score = float(predictions[0][predicted_index])
-        predicted_label = le.inverse_transform([predicted_index])[0]
-
-        return {
-            "predicted_label": predicted_label,
-            "probability": confidence_score
-        }
-
-    except Exception as e:
-        return {"error": str(e)}, 500
 
 if __name__ == '__main__':
     app.run(debug=True)
