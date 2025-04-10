@@ -73,7 +73,6 @@ def upload_file():
                 "image_path": file_path,
                 "predicted_label": predicted_label,
                 "confidence_score": round(float(confidence_score), 4),
-                # "timestamp": str(np.datetime64('now')),
                 "status": "success"
             }).execute()
 
@@ -83,11 +82,17 @@ def upload_file():
                     "response": str(response)
                 }, 500
 
-
         except Exception as e:
             return {"error": f"Exception while inserting to Supabase: {str(e)}"}, 500
 
-        
+        finally:
+            # Delete all files in the uploads folder
+            for uploaded_file in os.listdir(app.config['UPLOAD_FOLDER']):
+                file_to_delete = os.path.join(app.config['UPLOAD_FOLDER'], uploaded_file)
+                try:
+                    os.remove(file_to_delete)
+                except Exception as e:
+                    print(f"Error deleting file {file_to_delete}: {e}")
 
         return {
             "predicted_label": predicted_label,
