@@ -62,7 +62,7 @@ function Contact() {
               <Mail className="w-5 h-5 text-blue-600 mt-1" />
               <div>
                 <h3 className="font-medium text-gray-900">Email</h3>
-                <p className="text-gray-600">mittalaryan984@gmail.com</p>
+                <p className="text-gray-600">medimind@gmail.com</p>
               </div>
             </div>
             <div className="flex items-start space-x-3">
