@@ -18,7 +18,7 @@ const Navigation = () => {
           <div className="flex">
             <Link to="/" className="flex items-center">
               <Stethoscope className="h-8 w-8 text-blue-600" />
-              <span className="ml-2 text-xl font-bold text-gray-800">PneumoDetect</span>
+              <span className="ml-2 text-xl font-bold text-gray-800">Medimind AI</span>
             </Link>
             
             <div className="hidden sm:ml-6 sm:flex sm:space-x-8">
